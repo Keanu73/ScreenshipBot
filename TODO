@@ -1,0 +1,21 @@
+TODO List
+
+In Order of Priority:
+
+(*) Measure how long people have been in VC, send messages into #action-log. (Ask them for a summary of what they did via DM perhaps?) Aggregate results into MongoDB database for monthly reports
+
+(*) Auto-kick function - if people have not joined a voice channel for 4 weeks, kick them automatically.
+
+(*) Add the ability for users to self-assign roles for their respective timezones (reaction/clicking a button)
+
+(*) Add welcome message DMs, with link to single video file.
+
+(*) Add ability to reserve voice channel by reacting to a message/clicking a button on a message in #lets-talk-about. Max 4 people? Allow users to mention WHO can join voice channel??
+
+(*) Add ability to subscribe to additional text channels in same way ^
+
+(*) Add ability for users to self-timeout themselves from accessing the Discord server, by letting the bot ban them for X amount of time (same with access to text channels)
+
+(*) Add Pomodoro timer
+
+(*) Add feedback form functionality
