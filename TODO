@@ -4,6 +4,8 @@ In Order of Priority:
 
 (*) Measure how long people have been in VC, send messages into #action-log. (Ask them for a summary of what they did via DM perhaps?) Aggregate results into MongoDB database for monthly reports
 
+(*) Add ability for bot to post reminder in #coming-up when events start
+
 (*) Auto-kick function - if people have not joined a voice channel for 4 weeks, kick them automatically.
 
 (*) Add the ability for users to self-assign roles for their respective timezones (reaction/clicking a button)
@@ -19,3 +21,5 @@ In Order of Priority:
 (*) Add Pomodoro timer
 
 (*) Add feedback form functionality
+
+(*) Auto-unlock workshop-chat when a workshop event is hosted

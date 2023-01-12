@@ -9,14 +9,17 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-// VoiceChannelRecord represents a record of a user's time spent in a voice channel.
-type VoiceChannelRecord struct {
-	UserID     string    `bson:"user_id"`
-	ChannelID  string    `bson:"channel_id"`
-	StartTime  time.Time `bson:"start_time"`
-	EndTime    time.Time `bson:"end_time"`
-	Duration   time.Duration
-	RecordedAt time.Time `bson:"recorded_at"`
+type Settings struct {
+	ActionLoggingChannelID string `bson:"action_logging_channel_id"`
+	AutoKickDuration       string `bson:"channel_id"`
+	CharacterLimit         int    `bson:"character_limit"`
+}
+
+type VoiceChannelReservation struct {
+	UserID    string    `bson:"user_id"`
+	ChannelID string    `bson:"channel_id"`
+	StartTime time.Time `bson:"start_time"`
+	EndTime   time.Time `bson:"end_time"`
 }
 
 var VCRCollection *mongo.Collection

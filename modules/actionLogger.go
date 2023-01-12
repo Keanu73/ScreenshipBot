@@ -8,26 +8,27 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
+// Store a map of voice channel join times for each user.
+var joinTimes = make(map[string]time.Time)
+
+// Sends a message: <USERNAME> meditated/exercised/journaled] for <DURATION> with <MENTIONS> in <CHANNEL>!
+// Formats it in embed?
+
 func ActionLogger(_ *discordgo.Session, event *discordgo.VoiceStateUpdate) {
+	oldChannelID := event.BeforeUpdate.ChannelID
+	newChannelID := event.ChannelID
+
 	// Get a handle to the voice channel records collection.
 	collection := &database.VCRCollection
 
-	// Store a map of voice channel join times for each user.
-	joinTimes := make(map[string]time.Time)
-
-	// Ignore the event if it doesn't have a voice channel ID.
-	if event.ChannelID == "" {
-		return
-	}
-
 	// If the user just joined the voice channel, store the current time.
-	if event.ChannelID != "" && event.ChannelID != event.GuildID {
+	if oldChannelID == "" && newChannelID != "" {
 		joinTimes[event.UserID] = time.Now()
 		return
 	}
 
 	// If the user just left a voice channel, calculate the duration they were in the channel and store it in a VoiceChannelRecord.
-	if event.ChannelID == event.GuildID {
+	if oldChannelID != "" && newChannelID == "" {
 		joinTime, ok := joinTimes[event.UserID]
 		if !ok {
 			return

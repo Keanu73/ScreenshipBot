@@ -12,11 +12,13 @@ import (
 // step 3: unlock VC, give them link to join
 // (all using ephemeral replies)
 
+// when they leave the VC, we should re-lock it.
+
 // eventually: add dynamic voice channel addition/removal using DB
 // for now: use static array of VC IDs
 
-// modifyAccess
-func _(session *discordgo.Session, guildID string, channelID string, lock bool) error {
+// modifyAccess modifies access to a VC for a user ID.
+func modifyAccess(session *discordgo.Session, userID string, channelID string, lock bool) error {
 	// basically, deny/allow @everyone the permission to connect to the VC
 	// requires that the bot has the "Connect" permission allowed for itself, otherwise it cannot modify permission
 
@@ -32,7 +34,7 @@ func _(session *discordgo.Session, guildID string, channelID string, lock bool) 
 
 	// we're using guild ID as target ID to specify @everyone
 	err := session.ChannelPermissionSet(
-		channelID, guildID, discordgo.PermissionOverwriteTypeRole, allowPermissionInt,
+		channelID, userID, discordgo.PermissionOverwriteTypeRole, allowPermissionInt,
 		denyPermissionInt,
 	)
 

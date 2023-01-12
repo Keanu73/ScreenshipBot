@@ -9,27 +9,22 @@ import (
 
 	"github.com/FedorLap2006/disgolf"
 	"github.com/Keanu73/ScreenshipBot/handlers"
+	"github.com/Keanu73/botutils"
 	"github.com/bwmarrin/discordgo"
 	_ "github.com/joho/godotenv/autoload"
 )
 
+var envVars = []string{
+	"ADMIN_ROLE_ID",
+	"BOT_TOKEN",
+	"BOT_GUILD_ID",
+	"DATABASE_URI",
+}
+
 func main() {
 	// Checks if env variables were set
-	botToken := os.Getenv("BOT_TOKEN")
-	guildID := os.Getenv("BOT_GUILD_ID")
-	vcID := os.Getenv("BOT_VC_ID")
-	// mongoURI := os.Getenv("MONGODB_URI")
 
-	if botToken == "" || guildID == "" || vcID == "" {
-		log.Fatal(
-			"[ERROR] One or more environment variables were not supplied.\n" +
-				"Please ensure the following environment variables are supplied:\n" +
-				"* BOT_TOKEN\n" +
-				"* BOT_GUILD_ID\n" +
-				"* BOT_VC_ID\n",
-			// "* MONGODB_URI",
-		)
-	}
+	botutils.Env.Check(envVars)
 
 	// If all good... let's continue
 
@@ -66,7 +61,7 @@ func main() {
 		discordgo.UpdateStatusData{
 			Activities: []*discordgo.Activity{
 				{
-					Name: "people better themselves",
+					Name: "people use screens less",
 					Type: discordgo.ActivityTypeWatching,
 				},
 			},

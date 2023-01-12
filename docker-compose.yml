@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  postgres:
+    environment:
+      POSTGRES_USER: screenship
+      POSTGRES_PASSWORD: postgres
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+    restart: always
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

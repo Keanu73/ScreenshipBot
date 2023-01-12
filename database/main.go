@@ -2,36 +2,24 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
-	"time"
 
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"github.com/jackc/pgx/v5"
 )
 
-var client *mongo.Client
-var _ context.Context
+var db *pgx.Conn
 var err error
 
-func init() {
-	// Creates context
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	// Create a new client and connect to the server
-	client, err = mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("MONGODB_URI")))
+func main() {
+	db, err = pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
-		panic(err)
+		log.Fatalf("Unable to connect to database: %v\n", err)
 	}
-	defer func() {
-		if err = client.Disconnect(ctx); err != nil {
-			panic(err)
-		}
-	}()
-	// Ping the primary
-	if err := client.Ping(ctx, readpref.Primary()); err != nil {
-		panic(err)
+
+	if err := db.Ping(context.Background()); err != nil {
+		defer db.Close(context.Background()) // close database connection
+		log.Fatal(fmt.Errorf("error, not sent ping to database, %w", err))
 	}
-	log.Println("[MONGO] Successfully connected and pinged.")
 }
